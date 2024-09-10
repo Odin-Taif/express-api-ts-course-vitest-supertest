@@ -13,7 +13,7 @@ userRouter.get("/", (req: Request, res: Response) => {
     form fields  name | email | password
 */
 userRouter.post(
-  "/register",
+  "/signup",
   [
     //-=-=-=-=-=-= Name validation
     body("name")

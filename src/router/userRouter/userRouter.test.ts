@@ -13,9 +13,9 @@ describe("GET /users", () => {
 });
 
 //post request register
-describe("POST /users/register", () => {
+describe("POST /users/signup", () => {
   it("should successfully register a user with valid data", async () => {
-    const response = await request(app).post("/users/register").send({
+    const response = await request(app).post("/users/signup").send({
       name: "John Doe",
       email: "john@example.com",
       password: "password123",
