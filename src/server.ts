@@ -5,7 +5,7 @@ import userRouter from "./router/userRouter/userRouter";
 //import appLogger from "./middleware/appLogger/appLogger";
 import apiRouter from "./router/apiRouter/apiRouter";
 import eventRouter from "./router/eventRouter/eventRouter";
-import { PrismaClient } from "@prisma/client";
+import { Client } from "pg";
 
 const app = express();
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
@@ -16,10 +16,10 @@ app.use(cors());
 // express configuration to receive form data
 app.use(express.json());
 
-// configure prisma
+// configure drizzle
 
-export const prisma = new PrismaClient({
-  log: ["query"],
+export const drizzle = new Client({
+  connectionString: process.env.DATABASE_URL,
 });
 
 // define the hostname

@@ -2,8 +2,8 @@ import express from "express";
 import { Request, Response } from "express";
 import bcrypt, { compareSync, hashSync } from "bcryptjs";
 import { body, validationResult } from "express-validator";
-import { prisma } from "../../server";
-import { login, signup } from "../../controllers/auth";
+// import { prisma } from "../../server";
+// import { login, signup } from "../../controllers/auth";
 import * as jwt from "jsonwebtoken";
 
 const userRouter: express.Router = express.Router();
@@ -53,25 +53,25 @@ userRouter.post(
       const { email, password, name } = req.body;
 
       // Check if user already exists
-      let user = await prisma.user.findFirst({ where: { email } });
-      if (user) {
-        return res.status(400).json({ message: "User already exists!" });
-      }
+      // let user = await prisma.user.findFirst({ where: { email } });
+      // if (user) {
+      //   return res.status(400).json({ message: "User already exists!" });
+      // }
 
       // Create new user
-      user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashSync(password), // Ensure hashSync is correctly imported and used
-        },
-      });
+      // user = await prisma.user.create({
+      //   data: {
+      //     name,
+      //     email,
+      //     password: hashSync(password), // Ensure hashSync is correctly imported and used
+      //   },
+      // });
 
       // Respond with success
-      res.status(201).json({
-        message: "User registered successfully",
-        user,
-      });
+      // res.status(201).json({
+      //   message: "User registered successfully",
+      //   user,
+      // });
     } catch (error) {
       console.error(error); // Log the error to the server console
       res.status(500).json({ message: "Internal Server Error" }); // Respond with a generic error message
@@ -108,20 +108,20 @@ userRouter.post(
         return res.status(400).json({ errors: errors.array() });
       }
       const { email, password } = req.body;
-      let user = await prisma.user.findFirst({ where: { email: email } });
-      if (!user) {
-        throw Error("User does not exisit!");
-      }
-      if (!compareSync(password, user.password)) {
-        throw Error("Incorrect password!");
-      }
-      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY!);
+      // let user = await prisma.user.findFirst({ where: { email: email } });
+      // if (!user) {
+      //   throw Error("User does not exisit!");
+      // }
+      // if (!compareSync(password, user.password)) {
+      //   throw Error("Incorrect password!");
+      // }
+      // const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY!);
 
-      res.status(200).json({
-        message: "user login",
-        user: user,
-        token: token,
-      });
+      // res.status(200).json({
+      //   message: "user login",
+      //   user: user,
+      //   token: token,
+      // });
     } catch (error) {
       console.log(error);
     }
