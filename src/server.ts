@@ -18,9 +18,9 @@ app.use(express.json());
 
 // configure drizzle
 
-export const drizzle = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
+// export const drizzle = new Client({
+//   connectionString: process.env.DATABASE_URL,
+// });
 
 // define the hostname
 const hostname: string = "localhost";

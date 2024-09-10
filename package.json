@@ -4,7 +4,7 @@
   "main": "build/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node build/server.js",
+    "start": "npm run build && node build/src/server.js",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
