@@ -25,6 +25,8 @@ RUN npm run build
 # Expose the port your app will run on
 EXPOSE 3000
 
+
+
 # Command to run the application in production
 CMD ["npm", "start", "scripts/docker-start.sh"]
 
