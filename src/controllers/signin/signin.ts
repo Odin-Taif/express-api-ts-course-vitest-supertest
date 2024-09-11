@@ -51,6 +51,6 @@ export const login = async (req: Request, res: Response) => {
       res.status(500).json({ message: "Internal Server Error" });
     }
   } else {
-    res.status(400).send("Please check your Email or Password!");
+    res.status(400).json({ message: "Please check your Email or Password!" });
   }
 };
