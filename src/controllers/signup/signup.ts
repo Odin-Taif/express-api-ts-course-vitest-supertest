@@ -7,7 +7,7 @@ import { users } from "../../dbschema/schema";
 import { db } from "../../dbschema/db";
 import { generateTokenAndSetCookie } from "../../utils/generateTokenAndSetCookie";
 import { generateVerificationToken } from "../../utils/generateVerificationToken";
-import { sendVerificationEmail } from "../../mailtrap/emails";
+import { sendVerificationEmail } from "../../../mailtrap/emails";
 
 // -=-=-=-=-=-=- signup controller
 

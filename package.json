@@ -1,10 +1,10 @@
 {
   "name": "express-api-ts",
   "version": "1.0.0",
-  "main": "build/server.js",
+  "main": "build/src/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node build/server.js",
+    "start": "npm run build && node build/src/server.js",
     "test": "vitest",
     "type": "commonjs"
   },
