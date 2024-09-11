@@ -1,2 +1,0 @@
-    // "start": "nodemon server.ts", change when developing 
-    //  "start": "node build/server.js", change when deploying

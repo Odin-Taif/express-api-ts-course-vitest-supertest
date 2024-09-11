@@ -17,8 +17,7 @@ COPY . .
 COPY drizzle ./drizzle/
 
 # # Generate any Drizzle configuration (if needed)
-# RUN npm run drizzle:generate  # Adjust if you have any generate step for drizzle
-
+RUN npx drizzle-kit generate 
 # Build the TypeScript code
 RUN npm run build
 
@@ -28,6 +27,6 @@ EXPOSE 3000
 
 
 # Command to run the application in production
-CMD ["npm", "start"]
+CMD ["npm", "start", "scripts/docker-start.sh"]
 
 
