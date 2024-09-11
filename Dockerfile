@@ -25,8 +25,8 @@ RUN npm run build
 EXPOSE 3000
 
 
-
+#"scripts/docker-start.sh"
 # Command to run the application in production
-CMD ["npm", "start", "scripts/docker-start.sh"]
+CMD ["npm", "start"]
 
 
