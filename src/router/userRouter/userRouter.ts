@@ -6,7 +6,6 @@ import { getUsers } from "../../controllers/getUsers/getUsers";
 const userRouter: express.Router = express.Router();
 
 userRouter.get("/", getUsers);
-
 // -=-==-=-=-=-=--=-==-=-=-=-=--=-=-=-register
 /*
     method: post
