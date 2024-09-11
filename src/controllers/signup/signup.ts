@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { hashSync } from "bcryptjs";
 import { validationResult } from "express-validator";
 import { eq } from "drizzle-orm/expressions";
-import { signUpSchema } from "../../dbschema/zod-validations";
-import { users } from "../../dbschema/schema";
-import { db } from "../../dbschema/db";
-import { generateTokenAndSetCookie } from "../../utils/generateTokenAndSetCookie";
-import { generateVerificationToken } from "../../utils/generateVerificationToken";
+import { signUpSchema } from "../../../dbschema/zod-validations";
+import { users } from "../../../dbschema/schema";
+import { db } from "../../../dbschema/db";
+import { generateTokenAndSetCookie } from "../../../utils/generateTokenAndSetCookie";
+import { generateVerificationToken } from "../../../utils/generateVerificationToken";
 import { sendVerificationEmail } from "../../../mailtrap/emails";
 
 // -=-=-=-=-=-=- signup controller
