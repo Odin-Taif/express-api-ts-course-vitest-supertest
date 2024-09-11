@@ -16,8 +16,8 @@ COPY . .
 # Copy Drizzle migration files (if necessary, adjust the path)
 COPY drizzle ./drizzle/
 
-# Generate any Drizzle configuration (if needed)
-RUN npm run drizzle:generate  # Adjust if you have any generate step for drizzle
+# # Generate any Drizzle configuration (if needed)
+# RUN npm run drizzle:generate  # Adjust if you have any generate step for drizzle
 
 # Build the TypeScript code
 RUN npm run build
