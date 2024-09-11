@@ -1,6 +1,6 @@
 {
-  "id": "1b07a2e4-92be-451f-b1e0-dbcbb073a40a",
-  "prevId": "143f159f-2471-4500-85ad-e8c1c1de7d19",
+  "id": "210f3a56-6536-4522-9729-a536f7715a3d",
+  "prevId": "ae74ca13-394f-4bfd-b10c-a12e745de782",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -45,6 +45,25 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "verifiedEmail": {
+          "name": "verifiedEmail",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "verificationToken": {
+          "name": "verificationToken",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verificationTokenExpiresAt": {
+          "name": "verificationTokenExpiresAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {

@@ -22,11 +22,12 @@ const passwordSchema = z
     (val) => /[!@#$%^&*(),.?":{}|<>]/.test(val),
     "Your password must contain at least one special character!"
   );
-
+const verificationTokenSchema = z.string();
 export const signUpSchema = z.object({
   name: nameSchema,
   email: emailSchema,
   password: passwordSchema,
+  verificationToken: verificationTokenSchema,
 });
 
 export const signInSchema = z.object({

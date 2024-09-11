@@ -18,7 +18,7 @@ export const signup = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
       }
       //-=-=-=-=-=-=-=-=-=-=
-      const { email, password, name } = userValidated.data;
+      const { email, password, name, verificationToken } = userValidated.data;
 
       // Check if user already exists in our db.
       const existingUser = await db
@@ -32,7 +32,8 @@ export const signup = async (req: Request, res: Response) => {
 
       // Hash the password
       const hashedPassword = hashSync(password, 10);
-
+      const generateVerificationToken = () =>
+        Math.floor(100000 + Math.random() * 900000).toString();
       // Create new user
       const newUser = await db
         .insert(users)
@@ -40,6 +41,10 @@ export const signup = async (req: Request, res: Response) => {
           name,
           email,
           password: hashedPassword,
+          verificationToken: generateVerificationToken(),
+          verificationTokenExpiresAt: new Date(
+            Date.now() + 24 * 60 * 60 * 1000
+          ),
         })
         .returning(); // Use `returning()` to get the inserted user back
 
