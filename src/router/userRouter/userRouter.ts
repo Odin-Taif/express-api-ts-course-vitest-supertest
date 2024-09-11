@@ -19,24 +19,6 @@ userRouter.post("/signup", signup);
     method: post
     form fields email | password
 */
-userRouter.post(
-  "/login",
-  [
-    //-=-=-=-= Email Validation
-    body("email").isEmail().withMessage("Correct Email is Required"),
-
-    //-=-=-=-= Password Validation
-    body("password")
-      .isLength({ min: 8, max: 40 })
-      .withMessage("Your password should be at least 8 characters!")
-      .matches(/[A-Z]/)
-      .withMessage("Your password must contain at least one uppercase letter!")
-      .matches(/[!@#$%^&*(),.?":{}|<>]/)
-      .withMessage(
-        "Your password must contain at least one special character!"
-      ),
-  ],
-  login
-);
+userRouter.post("/login", login);
 
 export default userRouter;

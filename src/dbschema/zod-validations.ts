@@ -23,8 +23,13 @@ const passwordSchema = z
     "Your password must contain at least one special character!"
   );
 
-export const userSchema = z.object({
+export const signUpSchema = z.object({
   name: nameSchema,
+  email: emailSchema,
+  password: passwordSchema,
+});
+
+export const signInSchema = z.object({
   email: emailSchema,
   password: passwordSchema,
 });

@@ -6,15 +6,15 @@ import * as jwt from "jsonwebtoken";
 import { db } from "../dbschema/db"; // Your Drizzle db instance
 import { users } from "../dbschema/schema"; // The users schema definition from Drizzle
 import { eq } from "drizzle-orm/expressions";
-import { userSchema } from "../dbschema/zod-validations";
+import { signUpSchema, signInSchema } from "../dbschema/zod-validations";
 
 // -=-=-=-=-=-=- signup controller
 
 export const signup = async (req: Request, res: Response) => {
-  const userValidated = userSchema.safeParse(req.body);
+  const userValidated = signUpSchema.safeParse(req.body);
   if (userValidated.success) {
     try {
-      // Validate request | Ask Marcus to review it and see it is this okey.
+      // Validate request | Ask Marcus to review it and see if this is an okey error handling.
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -61,39 +61,44 @@ export const signup = async (req: Request, res: Response) => {
 
 // -=-=-=-=-=-=-=-== login controller
 export const login = async (req: Request, res: Response) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+  const userValidated = signInSchema.safeParse(req.body);
+  if (userValidated.success) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const { email, password } = userValidated.data;
+
+      // Find user by email
+      const user = await db.select().from(users).where(eq(users.email, email));
+
+      if (user.length === 0) {
+        return res.status(400).json({ message: "User does not exist!" });
+      }
+
+      // Check password
+      const validPassword = compareSync(password, user[0].password);
+      if (!validPassword) {
+        return res.status(400).json({ message: "Incorrect password!" });
+      }
+
+      // Generate JWT token
+      const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY!, {
+        expiresIn: "1h", // Set token expiration time as needed
+      });
+
+      res.status(200).json({
+        message: "User logged in successfully",
+        user: user[0], // Drizzle returns an array, so use the first item
+        token: token,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-
-    const { email, password } = req.body;
-
-    // Find user by email
-    const user = await db.select().from(users).where(eq(users.email, email));
-
-    if (user.length === 0) {
-      return res.status(400).json({ message: "User does not exist!" });
-    }
-
-    // Check password
-    const validPassword = compareSync(password, user[0].password);
-    if (!validPassword) {
-      return res.status(400).json({ message: "Incorrect password!" });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY!, {
-      expiresIn: "1h", // Set token expiration time as needed
-    });
-
-    res.status(200).json({
-      message: "User logged in successfully",
-      user: user[0], // Drizzle returns an array, so use the first item
-      token: token,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+  } else {
+    res.status(400).send("Please check your Email or Password!");
   }
 };
