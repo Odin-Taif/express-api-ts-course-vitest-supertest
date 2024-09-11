@@ -6,6 +6,8 @@ import { signUpSchema } from "../../dbschema/zod-validations";
 import { users } from "../../dbschema/schema";
 import { db } from "../../dbschema/db";
 import { generateTokenAndSetCookie } from "../../utils/generateTokenAndSetCookie";
+import { generateVerificationToken } from "../../utils/generateVerificationToken";
+import { sendVerificationEmail } from "../../mailtrap/emails";
 
 // -=-=-=-=-=-=- signup controller
 
@@ -33,8 +35,7 @@ export const signup = async (req: Request, res: Response) => {
 
       // Hash the password
       const hashedPassword = hashSync(password, 10);
-      const generateVerificationToken = () =>
-        Math.floor(100000 + Math.random() * 900000).toString();
+      const verificationToken = generateVerificationToken();
       // Create new user
       const newUser = await db
         .insert(users)
@@ -43,15 +44,19 @@ export const signup = async (req: Request, res: Response) => {
           name,
           email,
           password: hashedPassword,
-          verificationToken: generateVerificationToken(),
+          verificationToken: verificationToken,
           verificationTokenExpiresAt: new Date(
             Date.now() + 24 * 60 * 60 * 1000
           ),
         })
         .returning(); // Use `returning()` to get the inserted user back
 
-      //jwt
+      //jwt |  generate the token and set it in the cookie.
+      // this token will be used to verify the user has the correct email provided.
       generateTokenAndSetCookie(res, id);
+
+      await sendVerificationEmail(email, verificationToken);
+
       // Respond with success
       res.status(201).json({
         message: "User registered successfully",
