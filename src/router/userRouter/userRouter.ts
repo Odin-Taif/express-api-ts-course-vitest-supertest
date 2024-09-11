@@ -1,12 +1,11 @@
 import express, { Request, Response } from "express";
 import { signup } from "../../controllers/signup/signup";
 import { login } from "../../controllers/signin/signin";
+import { getUsers } from "../../controllers/getUsers/getUsers";
 
 const userRouter: express.Router = express.Router();
 
-userRouter.get("/", (req: Request, res: Response) => {
-  res.json({ message: "route is working" });
-});
+userRouter.get("/", getUsers);
 
 // -=-==-=-=-=-=--=-==-=-=-=-=--=-=-=-register
 /*

@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./router/userRouter/userRouter";
-import apiRouter from "./router/apiRouter/apiRouter";
-import eventRouter from "./router/eventRouter/eventRouter";
 
 const app = express();
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
@@ -19,13 +17,10 @@ const hostname: string = "localhost";
 const port: number = 3000;
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 // middlerware configuration | make sure that the middlewares are placed before the routes.
-// app.use(appLogger);
 
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
-// // router config
-app.use("/api", apiRouter);
-app.use("/events", eventRouter);
-app.use("/users", userRouter);
+
+app.use("/api/v1/users", userRouter);
 
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 app.get("/", (req: express.Request, res: express.Response) => {
