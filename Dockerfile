@@ -27,6 +27,6 @@ EXPOSE 3000
 
 
 # Command to run the application in production
-CMD ["npm", "start", "scripts/docker-start.sh"]
+CMD ["npm", "start"]
 
 
