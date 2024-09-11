@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 // Name validation: Ensure name is between 3 and 40 characters and is not empty
+const idShecma = z.any();
 const nameSchema = z
   .string()
   .min(3, "Name must be at least 3 characters long")
@@ -22,12 +23,11 @@ const passwordSchema = z
     (val) => /[!@#$%^&*(),.?":{}|<>]/.test(val),
     "Your password must contain at least one special character!"
   );
-const verificationTokenSchema = z.string();
 export const signUpSchema = z.object({
+  id: idShecma,
   name: nameSchema,
   email: emailSchema,
   password: passwordSchema,
-  verificationToken: verificationTokenSchema,
 });
 
 export const signInSchema = z.object({

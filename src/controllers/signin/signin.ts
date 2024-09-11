@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 // import { prisma } from "../server";
-import { hashSync, compareSync } from "bcryptjs";
+import { compareSync } from "bcryptjs";
 import { validationResult } from "express-validator";
 import * as jwt from "jsonwebtoken";
 

@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm/expressions";
 import { signUpSchema } from "../../dbschema/zod-validations";
 import { users } from "../../dbschema/schema";
 import { db } from "../../dbschema/db";
+import { generateTokenAndSetCookie } from "../../utils/generateTokenAndSetCookie";
 
 // -=-=-=-=-=-=- signup controller
 
@@ -18,7 +19,7 @@ export const signup = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
       }
       //-=-=-=-=-=-=-=-=-=-=
-      const { email, password, name, verificationToken } = userValidated.data;
+      const { id, email, password, name } = userValidated.data;
 
       // Check if user already exists in our db.
       const existingUser = await db
@@ -38,6 +39,7 @@ export const signup = async (req: Request, res: Response) => {
       const newUser = await db
         .insert(users)
         .values({
+          id,
           name,
           email,
           password: hashedPassword,
@@ -48,6 +50,8 @@ export const signup = async (req: Request, res: Response) => {
         })
         .returning(); // Use `returning()` to get the inserted user back
 
+      //jwt
+      generateTokenAndSetCookie(res, id);
       // Respond with success
       res.status(201).json({
         message: "User registered successfully",
