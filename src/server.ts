@@ -1,11 +1,8 @@
 import express from "express";
 import cors from "cors";
-import dotEnv from "dotenv";
 import userRouter from "./router/userRouter/userRouter";
-//import appLogger from "./middleware/appLogger/appLogger";
 import apiRouter from "./router/apiRouter/apiRouter";
 import eventRouter from "./router/eventRouter/eventRouter";
-import { Client } from "pg";
 
 const app = express();
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
@@ -15,12 +12,6 @@ app.use(cors());
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 // express configuration to receive form data
 app.use(express.json());
-
-// configure drizzle
-
-// export const drizzle = new Client({
-//   connectionString: process.env.DATABASE_URL,
-// });
 
 // define the hostname
 const hostname: string = "localhost";

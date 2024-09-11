@@ -6,54 +6,60 @@ import * as jwt from "jsonwebtoken";
 import { db } from "../dbschema/db"; // Your Drizzle db instance
 import { users } from "../dbschema/schema"; // The users schema definition from Drizzle
 import { eq } from "drizzle-orm/expressions";
+import { userSchema } from "../dbschema/zod-validations";
 
-// signup controller
+// -=-=-=-=-=-=- signup controller
 
 export const signup = async (req: Request, res: Response) => {
-  try {
-    // Validate request
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+  const userValidated = userSchema.safeParse(req.body);
+  if (userValidated.success) {
+    try {
+      // Validate request | Ask Marcus to review it and see it is this okey.
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      //-=-=-=-=-=-=-=-=-=-=
+      const { email, password, name } = userValidated.data;
+
+      // Check if user already exists in our db.
+      const existingUser = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email));
+
+      if (existingUser.length > 0) {
+        return res.status(400).json({ message: "User already exists!" });
+      }
+
+      // Hash the password
+      const hashedPassword = hashSync(password, 10);
+
+      // Create new user
+      const newUser = await db
+        .insert(users)
+        .values({
+          name,
+          email,
+          password: hashedPassword,
+        })
+        .returning(); // Use `returning()` to get the inserted user back
+
+      // Respond with success
+      res.status(201).json({
+        message: "User registered successfully",
+        user: newUser[0], // Drizzle returns an array, so use the first item
+      });
+    } catch (error) {
+      console.error(error); // Log the error to the server console
+      res.status(500).json({ message: "Internal Server Error" }); // Respond with a generic error message
     }
-
-    const { email, password, name } = req.body;
-
-    // Check if user already exists
-    const existingUser = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email));
-
-    if (existingUser.length > 0) {
-      return res.status(400).json({ message: "User already exists!" });
-    }
-
-    // Hash the password
-    const hashedPassword = hashSync(password, 10);
-
-    // Create new user
-    const newUser = await db
-      .insert(users)
-      .values({
-        name,
-        email,
-        password: hashedPassword,
-      })
-      .returning(); // Use `returning()` to get the inserted user back
-
-    // Respond with success
-    res.status(201).json({
-      message: "User registered successfully",
-      user: newUser[0], // Drizzle returns an array, so use the first item
-    });
-  } catch (error) {
-    console.error(error); // Log the error to the server console
-    res.status(500).json({ message: "Internal Server Error" }); // Respond with a generic error message
+  } else {
+    res.status(400).send("The input in not valid!");
   }
 };
 
-// login controller
+// -=-=-=-=-=-=-=-== login controller
 export const login = async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
