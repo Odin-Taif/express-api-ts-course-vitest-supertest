@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
-import { body } from "express-validator";
-import { login, signup } from "../../controllers/auth";
+import { signup } from "../../controllers/signup/signup";
+import { login } from "../../controllers/signin/signin";
+
 const userRouter: express.Router = express.Router();
 
 userRouter.get("/", (req: Request, res: Response) => {
