@@ -19,6 +19,7 @@
     "@types/express-validator": "^3.0.0",
     "@types/gravatar": "^1.8.6",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/nodemailer": "^6.4.15",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
