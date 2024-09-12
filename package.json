@@ -2,11 +2,11 @@
   "name": "express-api-ts",
   "version": "1.0.0",
   "main": "build/server.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node build/src/server.js",
-    "test": "vitest",
-    "type": "module"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
