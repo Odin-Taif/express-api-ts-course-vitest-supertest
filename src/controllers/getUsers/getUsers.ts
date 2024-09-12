@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { users } from "../../../dbschema/schema";
-import { db } from "../../../dbschema/db";
+import { users } from "../../../drizzle/dbschema/schema";
+import { db } from "../../../drizzle/dbschema/db";
 
 // -=-=-=-=-=-=- signup controller
 

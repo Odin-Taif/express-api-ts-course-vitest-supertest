@@ -5,9 +5,9 @@ import { validationResult } from "express-validator";
 import * as jwt from "jsonwebtoken";
 
 import { eq } from "drizzle-orm/expressions";
-import { users } from "../../../dbschema/schema";
-import { db } from "../../../dbschema/db";
-import { signInSchema } from "../../../dbschema/zod-validations";
+import { users } from "../../../drizzle/dbschema/schema";
+import { db } from "../../../drizzle/dbschema/db";
+import { signInSchema } from "../../../drizzle/dbschema/zod-validations";
 
 // -=-=-=-=-=-=- signup controller
 
