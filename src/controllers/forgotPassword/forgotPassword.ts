@@ -1,14 +1,12 @@
 // forgot password clicked ==> | post: email ===> check if the email in db ==> send an email with a recieve passwordLink.
 import { Request, Response } from "express";
-import { hashSync } from "bcryptjs";
 import { validationResult } from "express-validator";
 import { eq } from "drizzle-orm/expressions";
 import { forgotPasswordSchema } from "../../../drizzle/dbschema/zod-validations";
 import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
-import { generateTokenAndSetCookie } from "../../../utils/generateTokenAndSetCookie";
-import { generateVerificationToken } from "../../../utils/generateVerificationToken";
-import { sendVerificationEmail } from "../../../mailtrap/emails";
+import crypto from "crypto";
+import { sendPasswordResetEmail } from "../../../mailtrap/emails";
 
 export const forgotPassword = async (req: Request, res: Response) => {
   const userValidated = forgotPasswordSchema.safeParse(req.body);
@@ -21,15 +19,33 @@ export const forgotPassword = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
       }
       const { email } = userValidated.data;
-      // Check if user already exists in our db.
+      const resetToken = crypto.randomBytes(20).toString("hex");
+      const resetTokenExpiresAt = new Date(
+        Date.now() + 1 * 60 * 60 * 1000
+      ).toISOString();
       const existingUser = await db
-        .select()
-        .from(users)
-        .where(eq(users.email, email));
+        .update(users)
+        .set({
+          resetPasswordToken: resetToken,
+          resetPasswordExpiresAt: resetTokenExpiresAt,
+        })
+        .where(eq(users.email, email))
+        .returning();
 
-      if (existingUser.length === 0) {
+      if (!existingUser[0]) {
         return res.status(400).json({ message: "User is not in db" });
       }
-    } catch (error) {}
+
+      const updatedUser = existingUser[0];
+
+      await sendPasswordResetEmail(updatedUser.email, "url");
+
+      res.status(200).json({
+        success: true,
+        message: "Password reset link sent to your email",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
