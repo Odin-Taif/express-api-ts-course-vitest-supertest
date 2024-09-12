@@ -13,6 +13,7 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+COPY .env /src/app/.env
 # # Copy Drizzle migration files (if necessary, adjust the path)
 COPY drizzle ./drizzle/
 

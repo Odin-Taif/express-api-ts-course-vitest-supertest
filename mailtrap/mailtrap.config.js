@@ -4,6 +4,8 @@ import { MailtrapClient } from "mailtrap";
 
 const TOKEN = process.env.MAILTRAP_TOKEN;
 
+console.log("MAILTRAP_TOKEN:", process.env.MAILTRAP_TOKEN);
+
 if (!TOKEN) {
   throw new Error("MAILTRAP_TOKEN is not set in the environment variables");
 }
