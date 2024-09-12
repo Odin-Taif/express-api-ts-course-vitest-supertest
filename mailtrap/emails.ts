@@ -1,6 +1,6 @@
 import { VERIFICATION_EMAIL_TEMPLATE } from "./templates";
-import { mailTrapClient } from "./mailtrap.config";
-import { sender } from "./mailtrap.config";
+import { mailTrapClient } from "../mailtrap.config";
+import { sender } from "../mailtrap.config";
 export const sendVerificationEmail = async (
   email: any,
   verificationToken: any
