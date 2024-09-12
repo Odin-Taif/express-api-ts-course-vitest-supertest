@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import userRouter from "./router/userRouter/userRouter";
 
 const app = express();
@@ -10,6 +12,7 @@ app.use(cors());
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 // express configuration to receive form data
 app.use(express.json());
+app.use(cookieParser());
 
 // define the hostname
 const hostname: string = "localhost";

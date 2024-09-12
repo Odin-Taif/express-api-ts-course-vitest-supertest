@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm/expressions";
 import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
 import { signInSchema } from "../../../drizzle/dbschema/zod-validations";
+import { generateTokenAndSetCookie } from "../../../utils/generateTokenAndSetCookie";
 
 // -=-=-=-=-=-=- signup controller
 
@@ -44,7 +45,7 @@ export const login = async (req: Request, res: Response) => {
       const token = jwt.sign({ userId: user[0].id }, process.env.SECRET_KEY!, {
         expiresIn: "1h", // Set token expiration time as needed
       });
-
+      generateTokenAndSetCookie(res, user[0].id);
       res.status(200).json({
         success: true,
         message: "User logged in successfully",

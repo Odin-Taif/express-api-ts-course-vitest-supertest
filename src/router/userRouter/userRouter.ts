@@ -6,6 +6,8 @@ import { verifyEmail } from "../../controllers/verifyEmail/verifyEmail";
 import { logout } from "../../controllers/logout/logout";
 import { forgotPassword } from "../../controllers/forgotPassword/forgotPassword";
 import { resetPassword } from "../../controllers/resePassword/resetPassword";
+import { verifyToken } from "../../middleware/verifyToken";
+import { checkAuth } from "../../middleware/checkAuth";
 
 const userRouter: express.Router = express.Router();
 
@@ -55,5 +57,13 @@ userRouter.post("/forgot-password", forgotPassword);
 
 */
 userRouter.post("/reset-password/:token", resetPassword);
+
+/*
+    method: get
+    // It is protucted route 
+
+
+*/
+userRouter.get("/protucted-route", verifyToken, checkAuth);
 
 export default userRouter;
