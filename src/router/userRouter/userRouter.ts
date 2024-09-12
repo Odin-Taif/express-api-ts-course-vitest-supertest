@@ -9,6 +9,10 @@ import { resetPassword } from "../../controllers/resePassword/resetPassword";
 
 const userRouter: express.Router = express.Router();
 
+/*
+    method: get
+    get all users in our db
+*/
 userRouter.get("/", getUsers);
 // -=-==-=-=-=-=--=-==-=-=-=-=--=-=-=-register
 /*
@@ -26,24 +30,28 @@ userRouter.post("/login", login);
 
 /*
     method: post
-    form fields code
-*/
-userRouter.post("/verify-email", verifyEmail);
-
-/*
-    method: post
-
+    // will be deleting the cookies 
 */
 userRouter.post("/logout", logout);
 
 /*
     method: post
+    input : the code sent to the email reciepent
+*/
+userRouter.post("/verify-email", verifyEmail);
+
+/*
+    method: post
+    input: email
 
 */
 userRouter.post("/forgot-password", forgotPassword);
 
 /*
     method: post
+    // reseting the password to a new password.
+    input : new password
+    // a Token from the req.params of the -=-=-=| forgot-password route into -=-==-=|reset-password req.pramas  
 
 */
 userRouter.post("/reset-password/:token", resetPassword);
