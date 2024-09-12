@@ -18,7 +18,7 @@ export const login = async (req: Request, res: Response) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success: false, errors: errors.array() });
       }
 
       const { email, password } = userValidated.data;
@@ -27,13 +27,17 @@ export const login = async (req: Request, res: Response) => {
       const user = await db.select().from(users).where(eq(users.email, email));
 
       if (user.length === 0) {
-        return res.status(400).json({ message: "User does not exist!" });
+        return res
+          .status(400)
+          .json({ success: false, message: "User does not exist!" });
       }
 
       // Check password
       const validPassword = compareSync(password, user[0].password);
       if (!validPassword) {
-        return res.status(400).json({ message: "Incorrect password!" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Incorrect password!" });
       }
 
       // Generate JWT token
@@ -42,15 +46,21 @@ export const login = async (req: Request, res: Response) => {
       });
 
       res.status(200).json({
+        success: true,
         message: "User logged in successfully",
         user: user[0], // Drizzle returns an array, so use the first item
         token: token,
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "Internal Server Error" });
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   } else {
-    res.status(400).json({ message: "Please check your Email or Password!" });
+    res.status(400).json({
+      success: false,
+      message: "Please check your Email or Password!",
+    });
   }
 };
