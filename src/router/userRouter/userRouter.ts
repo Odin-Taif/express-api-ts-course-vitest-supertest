@@ -4,6 +4,7 @@ import { login } from "../../controllers/signin/signin";
 import { getUsers } from "../../controllers/getUsers/getUsers";
 import { verifyEmail } from "../../controllers/verifyEmail/verifyEmail";
 import { logout } from "../../controllers/logout/logout";
+import { forgotPassword } from "../../controllers/forgotPassword/forgotPassword";
 
 const userRouter: express.Router = express.Router();
 
@@ -33,5 +34,11 @@ userRouter.post("/verify-email", verifyEmail);
 
 */
 userRouter.post("/logout", logout);
+
+/*
+    method: post
+
+*/
+userRouter.post("/forgot-password", forgotPassword);
 
 export default userRouter;

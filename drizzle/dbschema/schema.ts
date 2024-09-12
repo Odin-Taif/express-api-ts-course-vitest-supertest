@@ -20,6 +20,8 @@ export const users = pgTable(
     verifiedEmail: boolean("verifiedEmail").default(false),
     verificationToken: text("verificationToken"),
     verificationTokenExpiresAt: timestamp("verificationTokenExpiresAt"),
+    resetPasswordToken: text("verificationToken"),
+    resetPasswordExpiresAt: timestamp("verificationTokenExpiresAt"),
   },
   (table) => {
     return {
