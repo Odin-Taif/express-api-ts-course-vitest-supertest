@@ -68,8 +68,42 @@ Once you have installed the required packages, you can initialize your TypeScrip
 npx tsc --init
 ```
 
+Below is the content for your `README.md` file based on the API endpoints you provided:
+
+
+# API Endpoints Collection
+
+This project includes the following API endpoints:
+
+### POST `/reset-password`
+- **Description**: Resets the user's password.
+
+### GET `localhost:3000/`
+- **Description**: Fetches the base route of the API.
+
+### GET `localhost:3000/users`
+- **Description**: Retrieves a list of all users.
+
+### POST `/signin`
+- **Description**: Authenticates a user and provides a session token.
+
+### POST `/logout`
+- **Description**: Logs out the authenticated user.
+
+### POST `/signup`
+- **Description**: Registers a new user account.
+
+### POST `/verify-email`
+- **Description**: Verifies the user's email address.
+
+### POST `/reset-password`
+- **Description**: Sends a password reset email to the user.
+
+
+
+
 This will create a `tsconfig.json` file, which allows you to customize TypeScript compilation settings for your project.
 
----
 
-### You're now set up to develop with TypeScript in Node.js!
+
+---
