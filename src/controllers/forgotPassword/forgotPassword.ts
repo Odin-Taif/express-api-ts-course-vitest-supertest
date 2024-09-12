@@ -38,7 +38,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
       const updatedUser = existingUser[0];
 
-      await sendPasswordResetEmail(updatedUser.email, "url");
+      await sendPasswordResetEmail(updatedUser.email, `someurl/${resetToken}`);
 
       res.status(200).json({
         success: true,

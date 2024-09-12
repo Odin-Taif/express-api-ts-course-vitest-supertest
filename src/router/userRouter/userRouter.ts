@@ -5,6 +5,7 @@ import { getUsers } from "../../controllers/getUsers/getUsers";
 import { verifyEmail } from "../../controllers/verifyEmail/verifyEmail";
 import { logout } from "../../controllers/logout/logout";
 import { forgotPassword } from "../../controllers/forgotPassword/forgotPassword";
+import { resetPassword } from "../../controllers/resePassword/resetPassword";
 
 const userRouter: express.Router = express.Router();
 
@@ -40,5 +41,11 @@ userRouter.post("/logout", logout);
 
 */
 userRouter.post("/forgot-password", forgotPassword);
+
+/*
+    method: post
+
+*/
+userRouter.post("/reset-password/:token", resetPassword);
 
 export default userRouter;
