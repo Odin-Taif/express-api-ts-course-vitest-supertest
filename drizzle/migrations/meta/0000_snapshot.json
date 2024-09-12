@@ -1,5 +1,5 @@
 {
-  "id": "6fa8b1d9-f0f8-481f-9b26-407c2c43a36a",
+  "id": "00a09c05-5f1c-489b-9975-f8ae641db9b8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -50,7 +50,7 @@
           "name": "verifiedEmail",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
         },
         "verificationToken": {
@@ -63,7 +63,7 @@
           "name": "verificationTokenExpiresAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {
