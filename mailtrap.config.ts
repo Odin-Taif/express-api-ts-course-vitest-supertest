@@ -4,16 +4,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const TOKEN = process.env.TOKEN;
+const MAILTRAP_TOKEN = process.env.MAILTRAP_TOKEN;
 
-if (!TOKEN) {
+if (!MAILTRAP_TOKEN) {
   throw new Error("MAILTRAP_TOKEN is not set in the environment variables");
 } else {
-  console.log(TOKEN);
+  console.log(MAILTRAP_TOKEN);
 }
 
 export const mailTrapClient = new MailtrapClient({
-  token: TOKEN,
+  token: MAILTRAP_TOKEN,
 });
 
 export const sender = {
