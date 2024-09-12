@@ -41,6 +41,5 @@
     "tsx": "^4.19.0",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
-  },
-  "packageManager": "pnpm@7.30.3+sha1.fb200e05d66ad9e2d44f1440ffeaaf656e1bc10c"
+  }
 }
