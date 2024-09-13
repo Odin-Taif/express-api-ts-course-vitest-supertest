@@ -24,7 +24,9 @@ export const verifyEmail = async (req: Request, res: Response) => {
       const updatedUser = existingUser[0];
       await sendWelcomeEmail(updatedUser.email, updatedUser.name);
 
-      res.status(200).json({ message: "Email verified successfully" });
+      res
+        .status(200)
+        .json({ success: true, message: "Email verified successfully" });
     } else {
       res.status(400).json({
         error: "User not found or verification code is invalid or expired",

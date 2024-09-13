@@ -59,14 +59,17 @@ export const signup = async (req: Request, res: Response) => {
 
       // Respond with success
       res.status(201).json({
+        success: true,
         message: "User registered successfully",
         user: newUser[0], // Drizzle returns an array, so use the first item
       });
     } catch (error) {
       console.error(error); // Log the error to the server console
-      res.status(500).json({ message: "Internal Server Error" }); // Respond with a generic error message
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" }); // Respond with a generic error message
     }
   } else {
-    res.status(400).send("The input in not valid!");
+    res.status(400).json({ success: false, message: "Input not valid!" }); // Respond with a generic error message
   }
 };

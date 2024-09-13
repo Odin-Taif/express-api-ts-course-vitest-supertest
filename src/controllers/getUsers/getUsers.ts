@@ -23,6 +23,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
     // Respond with success
     res.status(200).json({
+      success: true,
       message: "Users fetched successfully",
       users: existingUsers, // Drizzle returns an array, so use the first item
     });
