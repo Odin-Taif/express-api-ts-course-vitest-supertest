@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
 import { eq, and, gt } from "drizzle-orm/expressions";
-import { sendWelcomeEmail } from "../../../mailtrap/emails";
+import { sendWelcomeEmail } from "../../../mailtrap/emailFunctions/sendWelcomeEmail";
 
 export const verifyEmail = async (req: Request, res: Response) => {
   // Destructure the 'code' from req.body

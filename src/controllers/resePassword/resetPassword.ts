@@ -4,7 +4,8 @@ import { and, eq, gt } from "drizzle-orm/expressions";
 import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
 import { hashSync } from "bcryptjs";
-import { sendResetSuccessEmail } from "../../../mailtrap/emails";
+import { sendResetSuccessEmail } from "../../../mailtrap/emailFunctions/sendResetSuccessEmail";
+
 export const resetPassword = async (req: Request, res: Response) => {
   const currentDate = new Date();
   try {

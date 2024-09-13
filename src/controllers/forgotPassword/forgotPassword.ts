@@ -6,7 +6,7 @@ import { forgotPasswordSchema } from "../../../drizzle/dbschema/zod-validations"
 import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
 import crypto from "crypto";
-import { sendPasswordResetEmail } from "../../../mailtrap/emails";
+import { sendPasswordResetEmail } from "../../../mailtrap/emailFunctions/sendPasswordResetEmail";
 
 export const forgotPassword = async (req: Request, res: Response) => {
   const userValidated = forgotPasswordSchema.safeParse(req.body);

@@ -7,7 +7,7 @@ import { users } from "../../../drizzle/dbschema/schema";
 import { db } from "../../../drizzle/dbschema/db";
 import { generateTokenAndSetCookie } from "../../../utils/generateTokenAndSetCookie";
 import { generateVerificationToken } from "../../../utils/generateVerificationToken";
-import { sendVerificationEmail } from "../../../mailtrap/emails";
+import { sendVerificationEmail } from "../../../mailtrap/emailFunctions/sendVerificationEmail";
 
 // -=-=-=-=-=-=- signup controller
 
