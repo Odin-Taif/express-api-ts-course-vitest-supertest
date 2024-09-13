@@ -29,6 +29,6 @@ export const getUsers = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error); // Log the error to the server console
-    res.status(500).json({ message: "Internal Server Error" }); // Respond with a generic error message
+    res.status(500).json({ success: false, message: "Internal Server Error" }); // Respond with a generic error message
   }
 };

@@ -5,7 +5,7 @@ import { getUsers } from "../../controllers/getUsers/getUsers";
 import { verifyEmail } from "../../controllers/verifyEmail/verifyEmail";
 import { logout } from "../../controllers/logout/logout";
 import { forgotPassword } from "../../controllers/forgotPassword/forgotPassword";
-import { resetPassword } from "../../controllers/resePassword/resetPassword";
+import { resetPassword } from "../../controllers/resetPassword/resetPassword";
 import { verifyToken } from "../../middleware/verifyToken";
 import { checkAuth } from "../../middleware/checkAuth";
 

@@ -33,7 +33,9 @@ export const forgotPassword = async (req: Request, res: Response) => {
         .returning();
 
       if (!existingUser[0]) {
-        return res.status(400).json({ message: "User is not in db" });
+        return res
+          .status(400)
+          .json({ success: false, message: "User is not in db" });
       }
 
       const updatedUser = existingUser[0];
