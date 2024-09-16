@@ -1,0 +1,81 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code from the GitHub repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Build the Node.js application
+      - name: Build application
+        run: npm run build
+
+      # Step 5: Build Docker image
+      - name: Build Docker image
+        run: docker build -t mjdthif/express-api-ts .
+
+      # Step 6: Log in to DockerHub
+      - name: Log in to DockerHub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # Step 7: Push Docker image to DockerHub
+      - name: Push Docker image to DockerHub
+        run: docker push mjdthif/express-api-ts
+
+      # Step 8: Install sshpass (for non-interactive SSH password login)
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      # Step 9: Add the remote server to the SSH known_hosts to prevent host verification prompts
+      - name: Add remote server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 85.224.36.102 >> ~/.ssh/known_hosts
+
+      # Step 10: Test SSH connection to the remote server
+      - name: Test SSH Connection
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no odin@85.224.36.102 "echo SSH connection successful"
+
+      # Step 11: Deploy the Docker container to the remote server
+      - name: Deploy to Webmin Server
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no odin@85.224.36.102 << 'EOF'
+            # Pull the latest Docker image from DockerHub
+            docker pull mjdthif/express-api-ts
+
+            # Stop and remove the old container (if any)
+            docker stop express-api-ts-1 || true
+            docker rm express-api-ts-1 || true
+
+            # Remove old Docker images (optional: keeps the system clean)
+            docker image prune -af --filter "until=24h"
+
+            # Run the new container with environment variables
+            docker run -d -p 3000:3000 --name express-api-ts-1 \
+              -e DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+              -e SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+              -e MAILTRAP_TOKEN="${{ secrets.MAILTRAP_TOKEN }}" \
+              mjdthif/express-api-ts
+          EOF
