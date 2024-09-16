@@ -5,28 +5,24 @@ import cookieParser from "cookie-parser";
 import userRouter from "./router/userRouter/userRouter";
 
 const app = express();
-//-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
-//configure cors
+
 app.use(cors());
 
-//-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 // express configuration to receive form data
 app.use(express.json());
 app.use(cookieParser());
 
-// define the hostname
 const hostname: string = "localhost";
-// define the port number
+
 const port: number = 3000;
-//-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
+
 // middlerware configuration | make sure that the middlewares are placed before the routes.
 
 //-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
 
 app.use("/api/v1/users", userRouter);
 
-//-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-==-=-=-=
-app.get("/", (req: express.Request, res: express.Response) => {
+app.get("/", (req, res) => {
   res
     .status(200)
     .json({ message: "Welcome from express with TS, Vitest and supertest" });
