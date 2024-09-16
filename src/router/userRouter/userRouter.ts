@@ -1,13 +1,14 @@
 import express from "express";
-import { signup } from "../../controllers/signup/signup";
-import { login } from "../../controllers/signin/signin";
-import { getUsers } from "../../controllers/getUsers/getUsers";
-import { verifyEmail } from "../../controllers/verifyEmail/verifyEmail";
-import { logout } from "../../controllers/logout/logout";
-import { forgotPassword } from "../../controllers/forgotPassword/forgotPassword";
-import { resetPassword } from "../../controllers/resetPassword/resetPassword";
-import { verifyToken } from "../../middleware/verifyToken";
-import { checkAuth } from "../../middleware/checkAuth";
+import {
+  signup,
+  login,
+  getUsers,
+  verifyEmail,
+  logout,
+  forgotPassword,
+  resetPassword,
+} from "../../controllers/Controllers|=|";
+import { verifyToken, checkAuth } from "../../middleware/Middleware|=|";
 
 const userRouter: express.Router = express.Router();
 
@@ -59,11 +60,10 @@ userRouter.post("/forgot-password", forgotPassword);
 userRouter.post("/reset-password/:token", resetPassword);
 
 /*
-    method: get
-    // It is protucted route 
-
+ method: get
+ meddileware method | verifyToken: to verify the token in cookies | checkAuth to check if the user exists in the db
 
 */
-userRouter.get("/protucted-route", verifyToken, checkAuth);
+userRouter.get("/protected-route", verifyToken, checkAuth);
 
 export default userRouter;
