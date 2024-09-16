@@ -8,7 +8,7 @@ import {
   forgotPassword,
   resetPassword,
 } from "../../controllers/Controllers|=|";
-import { verifyToken, checkAuth } from "../../middleware/Middleware|=|";
+import { verifyToken, checkAuth } from "../../middleware/index";
 
 const userRouter: express.Router = express.Router();
 
